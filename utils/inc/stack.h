@@ -37,7 +37,7 @@ struct Stack
     StackElem_t RightCanary = CANARY_VALUE;
 };
 
-enum ErrorCodes 
+enum StackErrorCodes 
 {
     ERR                     = 0,
     STACK_OVERFLOW          = 1,

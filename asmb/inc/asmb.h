@@ -14,58 +14,9 @@
 
 #include "../../utils/inc/stack.h"
 #include "../../utils/inc/utils.h"
+#include "../../utils/inc/errors.h"
 
 //--------------------------------------------------------//
-
-
-typedef unsigned long int ProcElem_t;
-
-static const int COMMANDS_AMOUNT = 26;
-
-struct Command
-{
-    int number;
-    const char * name[10];
-};
-
-Command Commands[COMMANDS_AMOUNT] = 
-{
-    {0,  "HLT"},
-    {10, "PUSH"},
-    {11, "PUSHR"},
-    {12, "PUSHM"},
-    {13, "PUSHRM"},
-    {20, "POP"},
-    {21, "POPM"},
-    {30, "JMP"},
-    {31, "JA"},
-    {32, "JAE"},
-    {33, "JB"},
-    {34, "JBE"},
-    {35, "JE"},
-    {36, "JNE"},
-    {40, "ADD"},
-    {41, "SUB"},
-    {42, "MUL"},
-    {43, "DIV"},
-    {44, "SQRT"},
-    {45, "POW"},
-    {46, "LN"},
-    {47, "SIN"},
-    {48, "COS"},
-    {5,  "CALL"},
-    {6,  "RET"},
-    {7,  "OUT"}
-};
-
-
-enum Registers
-{
-    AX = 1,
-    BX,
-    CX,
-    DX
-};
 
 const int ASMB_VERSION = 1;
 
@@ -83,12 +34,6 @@ struct Assembler
 
     int ip = 0;
     struct Line * line = NULL;
-};
-
-struct Line
-{
-    size_t len = 0;
-    char * ptr = 0;
 };
 
 //-------------------------- Assembling Service ----------------------------//

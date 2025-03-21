@@ -127,7 +127,7 @@ void StackDtor (struct Stack * stk)
 {
     StackCheck (stk);
 
-    free(stk->Data);
+    free (stk->Data-1);
     stk->Data = NULL;
 
     stk->Capacity = 0;

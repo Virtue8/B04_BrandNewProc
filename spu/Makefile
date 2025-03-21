@@ -7,13 +7,13 @@ CFLAGS = -c -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-
 	-Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing   \
 	-Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -Werror=vla -D_DEBUG -D_EJUDGE_CLIENT_SIDE
 
-INCLUDES = inc/asmb.h ../utils/inc/utils.h ../utils/inc/stack.h ../utils/inc/errors.h
+INCLUDES = inc/spu.h ../utils/inc/utils.h ../utils/inc/stack.h ../utils/inc/errors.h
 
-SOURCES = main.cpp src/asmb.cpp ../utils/src/utils.cpp ../utils/src/stack.cpp ../utils/src/errors.cpp
+SOURCES = main.cpp src/spu.cpp ../utils/src/utils.cpp ../utils/src/stack.cpp ../utils/src/errors.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
-EXECUTABLE = asmb.exe
+EXECUTABLE = spu.exe
 
 VPATH = ./src/
 

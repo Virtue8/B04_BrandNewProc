@@ -1,23 +1,34 @@
+#ifndef ASMB_CPP
+#define ASMB_CPP
+
 #include <stdio.h>
 #include "../inc/asmb.h"
 #include "../../utils/inc/utils.h"
+#include "../../utils/inc/commands.h"
+#include "../../utils/inc/errors.h"
 
 void asmbCtor (Assembler * asmb, const char * input_file_name, const char * output_file_name)
 {
-    assert (asmb);
-    assert (input_file_name);
-    assert (output_file_name);
+    if (asmb)
+        ErrorReport (NULL_STRUCTURE);
+    if (input_file_name)
+        ErrorReport (INVALID_PATH);
+    if (output_file_name)
+        ErrorReport (INVALID_PATH);
 
     asmb->file = fopen (input_file_name, "rb");                         
     asmb->output_file = fopen (output_file_name, "w");                  
 
-    assert (asmb->file);
-    assert (asmb->output_file);
+    if (asmb->file)
+        ErrorReport (FILE_OPENING_FAILED);
+    if (asmb->output_file)
+        ErrorReport (FILE_OPENING_FAILED);
 }
 
 void asmbDtor (Assembler * asmb)
 {
-    assert (asmb != NULL);
+    if (asmb != NULL)
+        ErrorReport (NULL_STRUCTURE);
 
     free   (asmb->code);
     fclose (asmb->output_file);
@@ -172,3 +183,6 @@ void MachineCodeWriter (Assembler * asmb, const char * output_code)
         fprintf (stderr, "Error: Failed to write complete data to file\n");
     }
 }
+
+
+#endif
