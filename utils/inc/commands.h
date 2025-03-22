@@ -1,7 +1,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-static const int COMMANDS_AMOUNT = 26;
+static const int COMMANDS_AMOUNT = 27;
 
 
 #include <stdio.h>
@@ -28,30 +28,31 @@ enum CommandCodes
 {
     HLT      = 0,
     PUSH     = 10,
-    PUSHR    = 11,
-    PUSHM    = 12,
-    PUSHRM   = 13,
+    PUSHR    = 11,  //
+    PUSHM    = 12,  //
+    PUSHRM   = 13,  //
     POP      = 20,
-    POPM     = 21,
-    JMP      = 30,
-    JA       = 31,
-    JAE      = 32,
-    JB       = 33,
-    JBE      = 34,
-    JE       = 35,
-    JNE      = 36,
+    POPR     = 21,  //
+    POPM     = 22,  //
+    JMP      = 30,  //
+    JA       = 31,  //
+    JAE      = 32,  //
+    JB       = 33,  //
+    JBE      = 34,  //
+    JE       = 35,  //
+    JNE      = 36,  //
     ADD      = 40,
     SUB      = 41,
     MUL      = 42,
     DIV      = 43,
     SQRT     = 44,
-    POW      = 45,
-    LN       = 46,
+    POW      = 45,  //
+    LN       = 46,  //
     SIN      = 47,
     COS      = 48,
-    CALL     = 5,
-    RET      = 6,
-    OUT      = 7
+    CALL     = 5,   //
+    RET      = 6,   //
+    OUT      = 7    //
 };
 
 Command Commands[COMMANDS_AMOUNT] =
@@ -62,6 +63,7 @@ Command Commands[COMMANDS_AMOUNT] =
     {PUSHM,  "PUSHM"},
     {PUSHRM, "PUSHRM"},
     {POP,    "POP"},
+    {POPR,   "POPR"},
     {POPM,   "POPM"},
     {JMP,    "JMP"},
     {JA,     "JA"},

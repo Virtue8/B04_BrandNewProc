@@ -1,6 +1,6 @@
 #include "inc/spu.h"
 
-int main ()
+int main (/*int argc, char * argv[]*/)
 {
     SPU spu = {};
 
@@ -11,10 +11,7 @@ int main ()
     spu.code = BufferCtor (spu.file, spu.file_size);
     CodeSeparator (&spu);
 
-    //CodeExecution (&spu);
-
-    StackDump (&spu.stack);
-    CommandIdentifier (&spu, 0);
+    CodeExecution (&spu);
 
     spuDtor (&spu);
 }

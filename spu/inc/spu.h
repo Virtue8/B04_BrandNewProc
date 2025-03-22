@@ -48,11 +48,8 @@ void CodeSeparator (SPU * spu);
 //----------------------------- Code Execution -----------------------------//
 
 void CodeExecution      (SPU * spu);
-void LineReader         (SPU * spu);
-int  GimmeArgNum        (char * line);
-//void GetComNArgs        ();
-void CommandIdentifier  (SPU * spu, size_t command_num, ...);
-void CommandExecution   (SPU * spu);
+void LineReader         (const char *input_line, SPU * spu);
+void CommandExecution   (SPU * spu, size_t command_num, ...);
 
 //--------------------------------------------------------------------------//
 

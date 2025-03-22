@@ -47,11 +47,11 @@ void CodeSeparator (Assembler * asmb);
 
 //--------------------- Reworking and Analyzing the Code -------------------//
 
-int GetCommandNumber (const char * command);
-int GetRegisterValue (const char *reg);
-void LineIdentifier (const char * input_line, char * output_line, Assembler * asmb);
-void CodeAssemble (Assembler * asmb);
-void MachineCodeWriter(Assembler * asmb, const char *output_code);
+int GetCommandNumber    (const char * command);
+int GetRegister         (const char *reg);
+void LineIdentifier     (const char * input_line, char * output_line, Assembler * asmb);
+void CodeAssemble       (Assembler * asmb);
+void MachineCodeWriter  (Assembler * asmb, const char *output_code);
 
 //--------------------------------------------------------//
 

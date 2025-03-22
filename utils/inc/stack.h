@@ -10,6 +10,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+const int STACK_VERSION = 1;
+
 #define RESET   "\033[0m"
 #define RED     "\033[1;31m"
 #define GREEN   "\033[1;32m"

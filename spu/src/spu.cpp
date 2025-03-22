@@ -60,43 +60,114 @@ void CodeExecution (SPU * spu)
     {
         if (i != 0)
             spu->line[i].ptr++;
+
+        char input_line[20] = "";
+
+        strcpy (input_line, spu->line[i].ptr);
+
+        LineReader (input_line, spu);
     }
 }
 
-void LineReader (SPU * spu)
+void LineReader (const char *input_line, SPU * spu) 
 {
+    assert  (input_line != NULL);
+    int command = -1;
+    char arg1[10] = "";
+    char arg2[10] = "";
+
+    int words_amount = sscanf (input_line, "%d %s %s", &command, arg1, arg2);
+
+    int num1 = 0;
+    int num2 = 0;
+
+    if (words_amount >= 2)
+    {
+        printf ("!!!!!!!\n");
+        if (sscanf (arg1, "%d", &num1) != 1) 
+        {
+            fprintf (stderr, "Error: Invalid argument '%s'\n", arg1);
+            abort ();
+        }
+    }
     
+    if (words_amount >= 3) 
+    {
+        if (sscanf (arg2, "%d", &num2) != 1) 
+        {
+            fprintf (stderr, "Error: Invalid argument '%s'\n", arg2);
+            abort ();
+        }
+    }
+
+    switch (words_amount) 
+    {
+        case 1:
+            CommandExecution (spu, command);
+            break;
+        case 2:
+            CommandExecution (spu, command, num1);
+            break;
+        case 3:
+            CommandExecution (spu, command, num1, num2);
+            break;
+        default:
+            fprintf (stderr, "Error: Invalid input format\n");
+            abort ();
+    }
 }
 
-void CommandIdentifier (SPU * spu, size_t command_num, ...)
+void CommandExecution (SPU * spu, size_t command_num, ...)
 {
     va_list arg;
-    
+
     switch (command_num) 
     {
         case HLT:
             exit (0);
+
         case PUSH:
             va_start (arg, 1);
             StackPush (&spu->stack, va_arg (arg, int));
             break;
+
         case POP:
             StackPop (&spu->stack);
             break;
+
         case ADD:
             StackAdd (&spu->stack);
             break;
+
+        case SUB:
+            StackSub (&spu->stack);
+            break;
+
+        case MUL:
+            StackMul (&spu->stack);
+            break;
+
+        case DIV:
+            StackDiv (&spu->stack);
+            break;
+
+        case SQRT:
+            StackSqrt (&spu->stack);
+            break;
+
+        case SIN:
+            StackSin (&spu->stack);
+            break;
+
+        case COS:
+            StackCos (&spu->stack);
+            break;
+
         default:
             fprintf (stderr, "Error! Unidentified command.");
             break;
     }
 }
 
-//#define CommandIdentifier (com_number, ...)
-
-void CommandExecution (SPU * spu)
-{
-    
-}
 
 #endif

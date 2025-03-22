@@ -1,8 +1,8 @@
 #include "inc/asmb.h"
 
-int main () // FIXME argc argv
+int main (/*int argc, char * argv[]*/)
 {
-    Assembler asmb = {}; // memset(0)
+    Assembler asmb = {};
 
     asmbCtor (&asmb, "../sample/sample_code.txt", "../sample/machine_code.txt");
 

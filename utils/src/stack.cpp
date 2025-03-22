@@ -116,7 +116,7 @@ StackElem_t StackPop (struct Stack * stk)
     StackElem_t unit = stk->Data[stk->Size];
 
     if (stk->Capacity > 2 * stk->Size + 1)
-        StackRealloc (stk, RM_PUSH);
+        StackRealloc (stk, RM_POP);
 
     return unit;
 }
@@ -127,7 +127,7 @@ void StackDtor (struct Stack * stk)
 {
     StackCheck (stk);
 
-    free (stk->Data-1);
+    free (stk->Data);
     stk->Data = NULL;
 
     stk->Capacity = 0;

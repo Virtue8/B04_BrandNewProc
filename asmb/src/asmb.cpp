@@ -9,25 +9,23 @@
 
 void asmbCtor (Assembler * asmb, const char * input_file_name, const char * output_file_name)
 {
-    if (asmb)
-        ErrorReport (NULL_STRUCTURE);
-    if (input_file_name)
+    if (input_file_name == NULL)
         ErrorReport (INVALID_PATH);
-    if (output_file_name)
+    if (input_file_name == NULL)
         ErrorReport (INVALID_PATH);
 
     asmb->file = fopen (input_file_name, "rb");                         
     asmb->output_file = fopen (output_file_name, "w");                  
 
-    if (asmb->file)
+    if (asmb->file == NULL)
         ErrorReport (FILE_OPENING_FAILED);
-    if (asmb->output_file)
+    if (asmb->output_file == NULL)
         ErrorReport (FILE_OPENING_FAILED);
 }
 
 void asmbDtor (Assembler * asmb)
 {
-    if (asmb != NULL)
+    if (asmb == NULL)
         ErrorReport (NULL_STRUCTURE);
 
     free   (asmb->code);
@@ -72,7 +70,7 @@ int GetCommandNumber (const char * command)
     return -1;
 }
 
-int GetRegisterValue (const char * reg) 
+int GetRegister (const char * reg) 
 {
     if (strcmp (reg, "AX") == 0) return AX;
     if (strcmp (reg, "BX") == 0) return BX;
@@ -102,16 +100,18 @@ void LineIdentifier (const char *input_line, char *output_line, Assembler * asmb
         return;
     }
 
-    int num1 = 0, num2 = 0;
+    int num1 = 0;
+    int num2 = 0;
+
     if (words_amount >= 2)
     {
-        num1 = GetRegisterValue (arg1);
+        num1 = GetRegister (arg1);
         if (num1 == -1) 
         {
-            if (sscanf(arg1, "%d", &num1) != 1) 
+            if (sscanf (arg1, "%d", &num1) != 1) 
             {
-                fprintf(stderr, "Error: Invalid argument '%s'\n", arg1);
-                strcpy(output_line, "ERROR");
+                fprintf (stderr, "Error: Invalid argument '%s'\n", arg1);
+                strcpy (output_line, "ERROR");
                 return;
             }
         }
@@ -119,7 +119,7 @@ void LineIdentifier (const char *input_line, char *output_line, Assembler * asmb
 
     if (words_amount >= 3) 
     {
-        num2 = GetRegisterValue (arg2);
+        num2 = GetRegister (arg2);
         if (num2 == -1) 
         {
             if (sscanf (arg2, "%d", &num2) != 1) {
