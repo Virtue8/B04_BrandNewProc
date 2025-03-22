@@ -11,8 +11,10 @@ int main ()
     spu.code = BufferCtor (spu.file, spu.file_size);
     CodeSeparator (&spu);
 
-    CommandIdentifier (10);
-    CommandIdentifier (3);
+    //CodeExecution (&spu);
+
+    StackDump (&spu.stack);
+    CommandIdentifier (&spu, 0);
 
     spuDtor (&spu);
 }

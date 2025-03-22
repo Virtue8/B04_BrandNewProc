@@ -148,7 +148,7 @@ void StackRealloc (struct Stack * stk, int MODE)
         stk->Capacity = stk->Size + 1;
 
     else if (MODE == RM_PUSH)
-        stk->Capacity = stk->Size * 2;
+        stk->Capacity = stk->Size * 2 + 1;
     
     stk->Data = (StackElem_t *) realloc (stk->Data, sizeof(StackElem_t)*(stk->Capacity + 2));
     if (stk->Data == NULL) 

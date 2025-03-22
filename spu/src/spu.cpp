@@ -24,8 +24,6 @@ void spuDtor (SPU * spu)
     assert (spu != NULL);
 
     StackDtor (&spu->stack);
-    printf ("!!!!!!!!\n");
-    fclose (spu->file);
     free   (spu->code);
 }
 
@@ -54,14 +52,39 @@ void CodeSeparator (SPU * spu)
     }
 }
 
-void CommandIdentifier (size_t command_num)
+void CodeExecution (SPU * spu)
 {
+    assert (spu != NULL);
+
+    for (int i = 0; i < (int) spu->lines_amount; i++)
+    {
+        if (i != 0)
+            spu->line[i].ptr++;
+    }
+}
+
+void LineReader (SPU * spu)
+{
+    
+}
+
+void CommandIdentifier (SPU * spu, size_t command_num, ...)
+{
+    va_list arg;
+    
     switch (command_num) 
     {
         case HLT:
             exit (0);
         case PUSH:
-            printf ("python\n");
+            va_start (arg, 1);
+            StackPush (&spu->stack, va_arg (arg, int));
+            break;
+        case POP:
+            StackPop (&spu->stack);
+            break;
+        case ADD:
+            StackAdd (&spu->stack);
             break;
         default:
             fprintf (stderr, "Error! Unidentified command.");
@@ -69,5 +92,11 @@ void CommandIdentifier (size_t command_num)
     }
 }
 
+//#define CommandIdentifier (com_number, ...)
+
+void CommandExecution (SPU * spu)
+{
+    
+}
 
 #endif

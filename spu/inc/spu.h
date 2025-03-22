@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/param.h>
+#include <stdarg.h>
 
 #include "../../utils/inc/stack.h"
 #include "../../utils/inc/utils.h"
@@ -46,8 +47,12 @@ void CodeSeparator (SPU * spu);
 
 //----------------------------- Code Execution -----------------------------//
 
-void CommandExecution (SPU * spu);
-void CommandIdentifier (size_t command_num);
+void CodeExecution      (SPU * spu);
+void LineReader         (SPU * spu);
+int  GimmeArgNum        (char * line);
+//void GetComNArgs        ();
+void CommandIdentifier  (SPU * spu, size_t command_num, ...);
+void CommandExecution   (SPU * spu);
 
 //--------------------------------------------------------------------------//
 
