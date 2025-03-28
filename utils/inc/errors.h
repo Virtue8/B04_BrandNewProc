@@ -26,6 +26,7 @@ enum ErrorCodes
     NULL_FILE           = 3,
     NULL_STRUCTURE      = 4,
     INVALID_PATH        = 5,
+    MEM_ALLOC_FAILED    = 6,
 };
 
 void ErrorReport (int error_code);

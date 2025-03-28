@@ -18,7 +18,7 @@
 
 //--------------------------------------------------------//
 
-const int ASMB_VERSION = 1;
+const int ASMB_VERSION = 2;
 
 struct Assembler
 {

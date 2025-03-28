@@ -7,15 +7,34 @@
 #include "../../utils/inc/commands.h"
 #include "../../utils/inc/stack.h"
 
-void spuCtor (SPU * spu, const char * file_name)
+void spuCtor(SPU* spu, const char* file_name) 
 {
     assert (spu);
     assert (file_name);
 
-    spu->file = fopen (file_name, "rb");
-
+    spu->file = fopen (file_name, "r");
     assert (spu->file);
 
+    spu->file_size = GimmeFileSize (spu->file);
+
+    spu->code = (spuElem_t*) calloc (spu->file_size + 1, sizeof(spuElem_t));
+    if (!spu->code) 
+    {
+        fclose (spu->file);
+        ErrorReport (MEM_ALLOC_FAILED);
+    }
+
+    size_t pos = 0;
+    spuElem_t value;
+
+    while (fscanf (spu->file, "%d", &value) == 1) 
+    {
+        spu->code [pos++] = value;
+    }
+
+    spu->file_size = pos;
+    fclose (spu->file);
+    
     StackCtor (&spu->stack);
 }
 
@@ -27,89 +46,46 @@ void spuDtor (SPU * spu)
     free   (spu->code);
 }
 
-void CodeSeparator (SPU * spu)
-{
-    assert (spu != NULL);
-
-    spu->lines_amount = BufferLinesRefactorer (spu->code);
-
-    spu->line = (Line *) calloc (spu->lines_amount, sizeof(Line));
-    assert (spu->line != NULL);
-
-    size_t prev_i_value = 0;
-    int k = 0;
-
-    for (size_t i = 0; i < spu->file_size + 1; i++)
-    {
-        if (spu->code[i] == '\0')
-        {
-            spu->line[k].len = i - prev_i_value;
-            spu->line[k].ptr = spu->code + i - spu->line[k].len;
-
-            prev_i_value = i;
-            k += 1;
-        }
-    }
-}
-
 void CodeExecution (SPU * spu)
 {
     assert (spu != NULL);
 
-    for (int i = 0; i < (int) spu->lines_amount; i++)
-    {
-        if (i != 0)
-            spu->line[i].ptr++;
-
-        char input_line[20] = "";
-
-        strcpy (input_line, spu->line[i].ptr);
-
-        LineReader (input_line, spu);
+    for (spu->ip = 0; spu->ip < (int) spu->file_size; spu->ip++)
+    {    
+        CommandSeek (spu->code[spu->ip], spu);
     }
+
 }
 
-void LineReader (const char *input_line, SPU * spu) 
+void CommandSeek (spuElem_t command, SPU * spu) 
 {
-    assert  (input_line != NULL);
-    int command = -1;
-    char arg1[10] = "";
-    char arg2[10] = "";
+    int args_amount = 0;
 
-    int words_amount = sscanf (input_line, "%d %s %s", &command, arg1, arg2);
-
-    int num1 = 0;
-    int num2 = 0;
-
-    if (words_amount >= 2)
+    for (int i = 0; i != COMMANDS_AMOUNT; i++)
     {
-        printf ("!!!!!!!\n");
-        if (sscanf (arg1, "%d", &num1) != 1) 
-        {
-            fprintf (stderr, "Error: Invalid argument '%s'\n", arg1);
-            abort ();
-        }
-    }
-    
-    if (words_amount >= 3) 
-    {
-        if (sscanf (arg2, "%d", &num2) != 1) 
-        {
-            fprintf (stderr, "Error: Invalid argument '%s'\n", arg2);
-            abort ();
-        }
+        if (Commands[i].number == command) 
+            args_amount = Commands[i].args_amount;
     }
 
-    switch (words_amount) 
+    spuElem_t arg1 = 0;
+    spuElem_t arg2 = 0;
+
+    switch (args_amount) 
     {
-        case 1:
+        case 0:
             CommandExecution (spu, command);
             break;
-        case 2:
-            CommandExecution (spu, command, num1);
+        case 1:
+            spu->ip++;
+            arg1 = spu->code[spu->ip];
+            CommandExecution (spu, command, arg1);
             break;
-        case 3:
-            CommandExecution (spu, command, num1, num2);
+        case 2:
+            spu->ip++;
+            arg1 = spu->code[spu->ip];
+            spu->ip++;
+            arg2 = spu->code[spu->ip];
+            CommandExecution (spu, command, arg1, arg2);
             break;
         default:
             fprintf (stderr, "Error: Invalid input format\n");
@@ -164,7 +140,7 @@ void CommandExecution (SPU * spu, size_t command_num, ...)
             break;
 
         default:
-            fprintf (stderr, "Error! Unidentified command.");
+            fprintf (stderr, "Error! Unidentified command.\n");
             break;
     }
 }

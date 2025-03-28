@@ -58,6 +58,25 @@ char * BufferCtor (FILE * file, size_t file_size)
     return buffer;
 }
 
+char * SPUBufferCtor (FILE * file, size_t file_size)
+{
+    assert (file != 0);
+    assert (file_size != 0);
+
+    char * buffer = (char *) calloc ((file_size + 1), sizeof(char));
+    assert (buffer);
+
+    size_t ReadStatus = fread (buffer, sizeof(char), file_size, file);
+    if (ReadStatus != file_size)
+        printf ("Reading status is incorrect!\n");
+
+    *(buffer + file_size) = '\0';
+
+    fclose (file);
+
+    return buffer;
+}
+
 //-----------------------------------------------------------------------//
 
 #endif

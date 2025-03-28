@@ -24,6 +24,9 @@ void ErrorReport (int error_code)
         case INVALID_PATH :
             COLORED_STDERR ("Invalid file name or path!");
             break;
+        case MEM_ALLOC_FAILED :
+            COLORED_STDERR ("Memory allocation failed!");
+            break;
         default:
             COLORED_STDERR ("Unknown error.");
             break;
