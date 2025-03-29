@@ -10,6 +10,12 @@ static const int COMMANDS_AMOUNT = 27;
 #include <ctype.h>
 #include <stdlib.h>
 
+struct Line
+ {
+     size_t len = 0;
+     char * ptr = 0;
+ };
+
 struct Command
 {
     int number;
