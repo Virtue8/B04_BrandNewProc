@@ -34,6 +34,7 @@ size_t BufferLinesRefactorer (char * buffer);
 
 FILE * FileOpener (const char * file_name);
 char * BufferCtor (FILE * file, size_t file_size);
+char * SPUBufferCtor (FILE * file, size_t file_size);
 
 //-----------------------------------------------------------------------//
 

@@ -12,6 +12,11 @@ void spuCtor(SPU* spu, const char* file_name)
     assert (spu);
     assert (file_name);
 
+//TODO
+//bin
+//jmp
+//guard
+
     spu->file = fopen (file_name, "r");
     assert (spu->file);
 
@@ -105,6 +110,11 @@ void CommandExecution (SPU * spu, size_t command_num, ...)
         case PUSH:
             va_start (arg, 1);
             StackPush (&spu->stack, va_arg (arg, int));
+            break;
+
+        case PUSHR:
+            va_start (arg, 1);
+            StackPush (&spu->stack, spu->reg_values [va_arg (arg, int)]);
             break;
 
         case POP:
